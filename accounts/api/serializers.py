@@ -4,6 +4,12 @@ from rest_framework.exceptions import AuthenticationFailed
 
 from accounts.models import User
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email']
+
+
 class LoginSerializer(serializers.Serializer):
     email_or_username = serializers.CharField()  # Can be username or email
     password = serializers.CharField(write_only=True)
