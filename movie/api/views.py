@@ -68,7 +68,7 @@ class MovieDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 
     @extend_schema(
         summary="Retrieve a specific movie",
@@ -256,7 +256,7 @@ class MovieReportDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Report.objects.all()
     serializer_class = ReportSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 
     @extend_schema(
         summary="Retrieve a specific movie report",
