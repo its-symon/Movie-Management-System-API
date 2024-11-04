@@ -162,7 +162,7 @@ class MovieRatingDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 
     @extend_schema(
         summary="Retrieve a specific movie rating",
