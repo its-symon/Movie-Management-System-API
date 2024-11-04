@@ -2,7 +2,7 @@ from django.urls import path
 from .views import ( MovieListView, MovieCreateView, MovieDetailView, 
                     MovieRatingListView, MovieRatingCreateView, MovieRatingDetailView,
                     MovieReportListView, MovieReportCreateView, MovieReportDetailView, 
-                    AdminReportListView) 
+                    AdminReportListView, AdminReportApprove, AdminReportReject, AdminReportStatusView) 
 
 urlpatterns = [
     # Movie URLs / Endpoints
@@ -22,4 +22,7 @@ urlpatterns = [
 
     # Admin Report View URL/ Endpoints
     path('admin-report/', AdminReportListView.as_view(), name='admin-report'),
+    path('report-approve/<int:pk>/', AdminReportApprove.as_view(), name='admin-report-approve'),
+    path('report-reject/<int:pk>/', AdminReportReject.as_view(), name='admin-report-reject'),
+    path('report-status/', AdminReportStatusView.as_view(), name='admin-report-status'),
 ]

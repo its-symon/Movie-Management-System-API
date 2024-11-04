@@ -1,8 +1,10 @@
 from django.shortcuts import redirect, get_object_or_404
 
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.exceptions import ValidationError
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from movie.models import Movie, Rating, Report
 from .serializers import MovieSerializer, RatingSerializer, ReportSerializer
@@ -125,16 +127,61 @@ class AdminReportListView(generics.ListAPIView):
     permission_classes = [IsAdminUser] 
 
 
-# class AdminReportApprove(generics.CreateAPIView):
-#     """
-#     API endpoint that allows administrators to approve a specific report.
-#     """
-#     serializer_class = ReportSerializer
-#     permission_classes = [IsAdminUser]
-#     queryset = Report.objects.all()
+class AdminReportApprove(generics.UpdateAPIView):
+    """
+    API endpoint that allows administrators to approve a specific report.
+    """
+    queryset = Report.objects.all()
+    serializer_class = ReportSerializer
+    permission_classes = [IsAdminUser]
+
+    def update(self, *args, **kwargs):
+        report = self.get_object()
+
+        if report.approved:
+            raise ValidationError('Report is already approved')
+        
+        report.approved = True
+        report.rejected = False
+        report.save()
+
+        serializer = self.get_serializer(report)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
-#     def perform_create(self, serializer):
-#         report_id = self.kwargs['pk']
-#         report = get_object_or_404(Report, id=report_id)
-#         report.is_approved = True
-#         report.save()
+
+class AdminReportReject(generics.UpdateAPIView):
+    """
+    API endpoint that allows administrators to reject a specific report.
+    """
+    queryset = Report.objects.all()
+    serializer_class = ReportSerializer
+    permission_classes = [IsAdminUser]
+
+    def update(self, *args, **kwargs):
+        report = self.get_object()
+
+        if report.rejected:
+            raise ValidationError('Report is already rejected')
+        
+        report.rejected = True
+        report.approved = False
+        report.save()
+
+        serializer = self.get_serializer(report)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class AdminReportStatusView(APIView):
+    """
+    API endpoint that allows users to view their own report status.
+    """
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+        report_approved_count = Report.objects.filter(approved=True).count()
+        report_rejected_count = Report.objects.filter(rejected=True).count()
+
+        return Response({
+            'approved_count': report_approved_count,
+            'rejected_count': report_rejected_count
+            }, status=status.HTTP_200_OK
+        )

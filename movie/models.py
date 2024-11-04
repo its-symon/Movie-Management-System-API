@@ -40,6 +40,8 @@ class Report(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     reason = models.CharField(max_length=256)
+    approved = models.BooleanField(default=False)
+    rejected = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.user.username} reported {self.movie.title}"
