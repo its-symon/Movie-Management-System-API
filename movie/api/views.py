@@ -10,8 +10,7 @@ from drf_spectacular.utils import extend_schema
 
 from movie.models import Movie, Rating, Report
 from .serializers import MovieSerializer, RatingSerializer, ReportSerializer
-
-
+from .permissions import IsOwnerOrReadOnly
 
 # Movie Views
 class MovieListView(generics.ListAPIView):
@@ -133,13 +132,7 @@ class MovieRatingCreateView(generics.CreateAPIView):
     API endpoint that allows users to create a new rating for a specific movie.
     """
     serializer_class = RatingSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        # Adding this method for schema generation compatibility
-        if getattr(self, 'swagger_fake_view', False):
-            return Rating.objects.none()
-        return Rating.objects.filter(movie_id=self.kwargs['pk'])
+    permission_classes = [IsOwnerOrReadOnly]
     
     def perform_create(self, serializer):
         user = self.request.user
