@@ -8,7 +8,7 @@ urlpatterns = [
     # Movie URLs / Endpoints
     path('movies/', MovieListView.as_view(), name='movie-list'),
     path('movie-create/', MovieCreateView.as_view(), name='movie-create'),
-    path('<int:pk>/', MovieDetailView.as_view(), name='movie-detail'),
+    path('movie/<int:pk>/', MovieDetailView.as_view(), name='movie-detail'),
 
     # Movie Rating URLs / Endpoints
     path('<int:pk>/rating/', MovieRatingListView.as_view(), name='movie-rating'),
