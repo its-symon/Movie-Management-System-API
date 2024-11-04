@@ -2,10 +2,19 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
+
+from drf_spectacular.utils import extend_schema
+
 from .serializers import LoginSerializer, RegisterSerializer
 
 class LoginView(APIView):
     permission_classes = []  # No restriction for login
+    
+    @extend_schema(
+        summary="Login user with username or email and password",
+        request=LoginSerializer,
+        responses={200: 'Access and refresh tokens'}
+    )
 
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
@@ -21,6 +30,13 @@ class LoginView(APIView):
 
 class RegisterView(APIView):
     permission_classes = []  # No restriction for registration
+
+    @extend_schema(
+        summary="Register a new user with username, email, and password",
+        request=RegisterSerializer,
+        responses={201: 'User registered with access and refresh tokens'}
+    )
+
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():

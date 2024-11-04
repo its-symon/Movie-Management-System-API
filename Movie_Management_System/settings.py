@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'accounts',
     'movie',
+    
+    # Documentation
+    'drf_yasg',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -137,6 +141,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 AUTHENTICATION_BACKENDS = [
@@ -148,4 +153,12 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'AUTH_HEADER_TYPES': ('Bearer',),
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Movie Management System API',
+    'DESCRIPTION': 'Documenting Movie Management System APIs',
+    'VERSION': '1.0.0',
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SERVE_INCLUDE_SCHEMA': False,
 }
