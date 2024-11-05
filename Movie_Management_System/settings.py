@@ -145,8 +145,8 @@ REST_FRAMEWORK = {
 }
 
 AUTHENTICATION_BACKENDS = [
-    'accounts.backends.EmailOrUsernameModelBackend',  # Add the custom backend here
-    'django.contrib.auth.backends.ModelBackend',      # Keep the default backend as a fallback
+    'accounts.backends.EmailOrUsernameModelBackend',  
+    'django.contrib.auth.backends.ModelBackend',      
 ]
 
 SIMPLE_JWT = {
