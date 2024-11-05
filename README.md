@@ -71,43 +71,49 @@ Start the server
 ```
 ## API Reference
 
+####  Accounts Endpoints:
+| HTTP | Endpoints | Action |
+| --- | --- | --- |
+| **POST** | `/accounts/login/` | To login a user |
+| **POST** | `/accounts/register/` | To register a user |
+
 
 ####  Movie Endpoints:
 | HTTP | Endpoints | Action |
 | --- | --- | --- |
-| **POST** | `/api/movie-create/` | To create a new employee record |
-| **GET** | `/api/movies/` | To retrieve all movies |
-| **GET** | `/api/movie/:id/` | To retrieve details of a single movies |
-| **PUT** | `/api/movie/:id/` | To update the details of a single movie |
-| **PATCH** | `/api/movie/:id/` | To update a detail of a single movie |
-| **DELETE** | `/api/movie/:id/` | To delete a single movie |
+| **POST** | `/movie/movie-create/` | To create a new movie record |
+| **GET** | `/movie/movies/` | To retrieve all movies |
+| **GET** | `/movie/movie/:id/` | To retrieve details of a single movies |
+| **PUT** | `/movie/movie/:id/` | To update the details of a single movie |
+| **PATCH** | `/movie/movie/:id/` | To update a detail of a single movie |
+| **DELETE** | `/movie/movie/:id/` | To delete a single movie |
 
 #### Rating Endpoints:
 | HTTP | Endpoints | Action |
 | --- | --- | --- |
-| **GET** | `/api/id/rating/` | To get ratings of particular movie |
-| **POST** | `/api/id/rating-create/` | To create a rating for particular movie |
-| **GET** | `/api/rating/id/` | To retrieve rating of a single movie |
-| **PUT** | `/api/rating/id/` | To update the rating of a single movie who created the movie rating |
-| **DELETE** | `/api/rating/id/` | To delete the rating of a single movie who created the movie rating |
+| **GET** | `/rating/id/rating/` | To get ratings of particular movie |
+| **POST** | `/rating/id/rating-create/` | To create a rating for particular movie |
+| **GET** | `/rating/rating/id/` | To retrieve rating of a single movie |
+| **PUT** | `/rating/rating/id/` | To update the rating of a single movie who created the movie rating |
+| **DELETE** | `/rating/rating/id/` | To delete the rating of a single movie who created the movie rating |
 
 
 #### Report Endpoints:
 | HTTP | Endpoints | Action |
 | --- | --- | --- |
-| **GET** | `/api/id/report` | To get all the report of a movie |
-| **POST** | `/api/id/report-create/` | To create a report for a particular movie |
-| **GET** | `/api/report/id/` | To retrieve the report of a specific movie who created the report|
-| **PUT** | `/api/report/id/` |To update the report of a specific movie who created the report|
-| **DELETE** | `/api/report/id/` | To delete the report of a specific movie who created the report |
+| **GET** | `/report/id/report` | To get all the report of a movie |
+| **POST** | `/report/id/report-create/` | To create a report for a particular movie |
+| **GET** | `/report/report/id/` | To retrieve the report of a specific movie who created the report|
+| **PUT** | `/report/report/id/` |To update the report of a specific movie who created the report|
+| **DELETE** | `/report/report/id/` | To delete the report of a specific movie who created the report |
 
 #### Admin's Endpoints:
 | HTTP | Endpoints | Action |
 | --- | --- | --- |
-| **GET** | `/api/admin-report/` | To retrieve all the reports that were reported by the users |
-| **PUT** | `/api/report-approve/id/` | To approve the reports of the user |
-| **PUT** | `/api/report-reject/id/` | To reject the reports of the user |
-| **GET** | `/api/report-status/` | To retrieve all the reports staus such as how many approved and rejected |
+| **GET** | `/admin_user/admin-report/` | To retrieve all the reports that were reported by the users |
+| **PUT** | `/admin_user/report-approve/id/` | To approve the reports of the user |
+| **PUT** | `/admin_user/report-reject/id/` | To reject the reports of the user |
+| **GET** | `/admin_user/report-status/` | To retrieve all the reports staus such as how many approved and rejected |
 ## Author
 
 👤 **Symon**
