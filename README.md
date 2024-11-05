@@ -39,7 +39,7 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd Movie_Management_System
+  cd Movie-Management-System-API
 ```
 
 Install dependencies
