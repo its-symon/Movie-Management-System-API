@@ -8,8 +8,7 @@ from drf_spectacular.utils import extend_schema
 from .serializers import LoginSerializer, RegisterSerializer
 
 class LoginView(APIView):
-    permission_classes = []  # No restriction for login
-    
+    permission_classes = []  
     @extend_schema(
         summary="Login user with username or email and password",
         request=LoginSerializer,
@@ -29,7 +28,7 @@ class LoginView(APIView):
         }, status=status.HTTP_200_OK)
 
 class RegisterView(APIView):
-    permission_classes = []  # No restriction for registration
+    permission_classes = []  
 
     @extend_schema(
         summary="Register a new user with username, email, and password",
