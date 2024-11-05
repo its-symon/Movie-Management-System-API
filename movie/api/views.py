@@ -40,16 +40,6 @@ class MovieCreateView(generics.CreateAPIView):
     serializer_class = MovieSerializer
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(
-        summary='Create a Movie',  
-        description='This endpoint allows users to create a movie. In order to create a movie, the user must login to the Movie Management System',
-        responses={
-            200: MovieSerializer(many=True),  
-        },
-    )
-
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
     
     @extend_schema(
         summary='Create a Movie',
