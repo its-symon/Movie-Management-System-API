@@ -12,10 +12,11 @@ class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields = [
-             'title', 'description', 'released_at', 
+             'id', 'title', 'description', 'released_at', 
             'duration_hours', 'duration_minutes', 'duration_seconds', 
             'genre', 'created_by', 'language', 'average_rating', 'total_ratings'
         ]
+        read_only_fields = ['id', 'created_by']
 
     def get_average_rating(self, obj):
         return obj.average_rating()
@@ -32,7 +33,7 @@ class RatingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Rating
-        fields = ['user', 'movie', 'rating', 'created_at']
+        fields = ['id', 'user', 'movie', 'rating', 'created_at']
 
 
 class ReportSerializer(serializers.ModelSerializer):
@@ -42,4 +43,4 @@ class ReportSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Report
-        fields = ['user', 'movie', 'reason']
+        fields = ['id', 'user', 'movie', 'reason']

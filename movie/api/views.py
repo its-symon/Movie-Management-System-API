@@ -10,7 +10,7 @@ from drf_spectacular.utils import extend_schema
 
 from movie.models import Movie, Rating, Report
 from .serializers import MovieSerializer, RatingSerializer, ReportSerializer
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly, IsOwnerOrReadOnly1
 
 # Movie Views
 class MovieListView(generics.ListAPIView):
@@ -39,6 +39,9 @@ class MovieCreateView(generics.CreateAPIView):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
     permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
 
     
     @extend_schema(
@@ -122,7 +125,7 @@ class MovieRatingCreateView(generics.CreateAPIView):
     API endpoint that allows users to create a new rating for a specific movie.
     """
     serializer_class = RatingSerializer
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly1]
     
     def perform_create(self, serializer):
         user = self.request.user
@@ -152,7 +155,7 @@ class MovieRatingDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
-    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly1]
 
     @extend_schema(
         summary="Retrieve a specific movie rating",
@@ -201,8 +204,7 @@ class MovieReportListView(generics.ListAPIView):
 
     def get_queryset(self):
         pk = self.kwargs.get('pk')
-        user = self.request.user
-        return Report.objects.filter(user=user, movie_id=pk)
+        return Report.objects.filter(movie_id=pk)
     
     @extend_schema(
         summary="Retrive a list of specific movie report",
@@ -246,7 +248,7 @@ class MovieReportDetailView(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Report.objects.all()
     serializer_class = ReportSerializer
-    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly1]
 
     @extend_schema(
         summary="Retrieve a specific movie report",
@@ -386,6 +388,15 @@ class AdminReportStatusView(APIView):
     """
     permission_classes = [IsAdminUser]
 
+    @extend_schema(
+        summary="Retrieve a report status",
+        description="Retrieve the number of approved and rejected reports for the authenticated user. Only administrators can see this information.",
+        responses={200: "No Content", 403: "Forbidden"}
+    )
+    
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
     def get(self, request):
         report_approved_count = Report.objects.filter(approved=True).count()
         report_rejected_count = Report.objects.filter(rejected=True).count()
@@ -396,11 +407,4 @@ class AdminReportStatusView(APIView):
             }, status=status.HTTP_200_OK
         )
     
-    @extend_schema(
-        summary="Retrieve a report status",
-        description="Retrieve the number of approved and rejected reports for the authenticated user. Only administrators can see this information.",
-        responses={200: "No Content", 403: "Forbidden"}
-    )
     
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
