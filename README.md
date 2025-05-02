@@ -1,7 +1,5 @@
 
-# Project Title
 
-A brief description of what this project does 
 
 
 # Welcome to Movie Management System API 👋
